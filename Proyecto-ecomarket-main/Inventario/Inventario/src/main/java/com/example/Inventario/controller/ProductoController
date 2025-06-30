@@ -1,0 +1,67 @@
+package com.ecomarket.controller;
+
+import com.ecomarket.model.Producto;
+import com.ecomarket.service.ProductoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/productos")
+public class ProductoController {
+
+    private final ProductoService productoService;
+
+    @Autowired
+    public ProductoController(ProductoService productoService) {
+        this.productoService = productoService;
+    }
+
+    // Obtener todos los productos
+    @GetMapping
+    public ResponseEntity<List<Producto>> obtenerTodosProductos() {
+        List<Producto> productos = productoService.listarTodos();
+        return new ResponseEntity<>(productos, HttpStatus.OK);
+    }
+
+    // Obtener un producto por ID
+    @GetMapping("/{id}")
+    public ResponseEntity<Producto> obtenerProductoPorId(@PathVariable Long id) {
+        Producto producto = productoService.buscarPorId(id);
+        return new ResponseEntity<>(producto, HttpStatus.OK);
+    }
+
+    // Crear un nuevo producto
+    @PostMapping
+    public ResponseEntity<Producto> crearProducto(@RequestBody Producto producto) {
+        Producto nuevoProducto = productoService.guardar(producto);
+        return new ResponseEntity<>(nuevoProducto, HttpStatus.CREATED);
+    }
+
+    // Actualizar un producto existente
+    @PutMapping("/{id}")
+    public ResponseEntity<Producto> actualizarProducto(
+            @PathVariable Long id,
+            @RequestBody Producto producto) {
+        Producto productoActualizado = productoService.actualizar(id, producto);
+        return new ResponseEntity<>(productoActualizado, HttpStatus.OK);
+    }
+
+    // Eliminar un producto
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminarProducto(@PathVariable Long id) {
+        productoService.eliminar(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    // Endpoint adicional: Buscar por categoría
+    @GetMapping("/categoria/{categoria}")
+    public ResponseEntity<List<Producto>> obtenerPorCategoria(
+            @PathVariable String categoria) {
+        List<Producto> productos = productoService.buscarPorCategoria(categoria);
+        return new ResponseEntity<>(productos, HttpStatus.OK);
+    }
+}
