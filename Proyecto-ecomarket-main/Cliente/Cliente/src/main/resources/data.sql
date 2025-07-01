@@ -1,8 +1,8 @@
 -- Clientes de ejemplo
-INSERT INTO clientes (nombre, email, direccion, telefono) VALUES 
-('María González', 'maria.gonzalez@example.com', 'Calle Primavera 123', '+56912345678'),
-('Juan Pérez', 'juan.perez@example.com', 'Avenida Libertad 456', '+56987654321'),
-('Sofía Ramírez', 'sofia.ramirez@example.com', 'Pasaje Los Olivos 789', '+56956781234');
+INSERT INTO clientes (nombre, contrasenia, run, telefono) VALUES 
+('María González', 'maria.12345678', '12489234', '+56912345678'),
+('Juan Pérez', 'juan.21467645773', '145682464', '+56987654321'),
+('Sofía Ramírez', 'sofia.47734368345', '204573465', '+56956781234');
 
 -- Actualización para demostración
-UPDATE clientes SET direccion = 'Nueva Dirección 100' WHERE email = 'maria.gonzalez@example.com';
+UPDATE clientes SET contrasenia = 'Nueva contrasenia 1' WHERE contrasenia = 'maria.12345678';
